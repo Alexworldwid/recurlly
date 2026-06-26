@@ -1,4 +1,4 @@
-import { useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import React from "react";
 import { View, Text } from "react-native";
 
@@ -8,7 +8,7 @@ export default function SubscriptionDetails () {
     return (
         <View>
             <Text>Subscription Details: {id}</Text>
-            <></>
+            <Link href="/(tabs)">Go back</Link>
         </View>
     )
 }

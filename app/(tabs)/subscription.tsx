@@ -1,10 +1,13 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { Text } from "react-native";
+import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
+import {styled} from "nativewind"
+const SafeAreaView = styled(RNSafeAreaView)
 
 export default function Subscriptions () {
     return (
-        <View>
+        <SafeAreaView className="bg-background flex-1 p-5">
             <Text>Subscriptions Page</Text>
-        </View>
+        </SafeAreaView>
     )
 }
