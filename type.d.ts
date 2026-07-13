@@ -45,12 +45,12 @@ declare global {
         daysLeft: number;
     }
 
-    // interface UpcomingSubscriptionCardProps
-    //     extends Omit<UpcomingSubscription, "id"> {}
+    interface UpcomingSubscriptionCardProps
+        extends Omit<UpcomingSubscription, "id"> {}
 
-    // interface ListHeadingProps {
-    //     title: string;
-    // }
+    interface ListHeadingProps {
+        title: string;
+    }
 }
 
 export {};
