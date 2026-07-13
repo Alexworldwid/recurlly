@@ -12,6 +12,7 @@ export const formatCurrency = (
       maximumFractionDigits: 2,
     }).format(value);
   } catch (error) {
+    console.log("Error formatting currency:", error);
     return "$0.00";
   }
 };

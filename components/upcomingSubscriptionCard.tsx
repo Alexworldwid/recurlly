@@ -8,7 +8,7 @@ const UpcomingSubscriptionCard = ({name, price, daysLeft, icon}: UpcomingSubscri
                 <Image source={icon} className="upcoming-icon" />
                 <View>
                     <Text className="upcoming-price">
-                        {formatCurrency(price, "$")}
+                        {formatCurrency(price, "USD")}
                     </Text>
                     <Text className="upcoming-meta" numberOfLines={1}>
                         {
