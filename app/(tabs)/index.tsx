@@ -1,20 +1,99 @@
-import "@/global.css"
-import { Link } from "expo-router";
-import { Text } from "react-native";
+import "@/global.css";
+import { FlatList, Image, Text, View } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-import {styled} from "nativewind"
-const SafeAreaView = styled(RNSafeAreaView)
- 
-export default function App() {
-  return (
-    <SafeAreaView className="flex-1 p-5 bg-background">
-      <Text className="text-7xl font-bold text-primary font-sans-extrabold">
-        Home
-      </Text>
-      <Link href="/onboarding" className="mt-4 font-sans-bold rounded bg-primary text-white py-2 px-8">Go to onboarding</Link>
-      <Link href="/(auth)/sign-in" className="mt-4 font-sans-bold rounded bg-primary text-white py-2 px-8">Sign In</Link>
-      <Link href="/(auth)/sign-up" className="mt-4 font-sans-bold rounded bg-primary text-white py-2 px-8">Sign Up</Link>
+import { styled } from "nativewind";
+import images from "@/constants/image";
+import {
+  HOME_BALANCE,
+  HOME_SUBSCRIPTIONS,
+  HOME_USER,
+  UPCOMING_SUBSCRIPTIONS,
+} from "@/constants/data";
+import { icons } from "@/constants/icons";
+import { formatCurrency } from "@/lib/utils";
+import dayjs from "dayjs";
+import ListHeading from "@/components/listHeading";
+import UpcomingSubscriptionCard from "@/components/upcomingSubscriptionCard";
+import SubscriptionCard from "@/components/subscriptionCard";
+import { useState } from "react";
 
+const SafeAreaView = styled(RNSafeAreaView);
+
+export default function App() {
+  const [subscriptionId, setSubscriptionId] = useState<string | null>(null);
+
+  return (
+    <SafeAreaView className="flex-1 p-5 bg-background"> 
+        <FlatList
+          ListHeaderComponent={() => (
+            <>
+              <View className="home-header">
+                <View className="home-user">
+                  <Image source={images.avatar} className="home-avatar" />
+                  <Text className="home-user-name">{HOME_USER.name}</Text>
+                </View>
+
+                <Image source={icons.add} className="home-add-icon" />
+              </View>
+
+              <View className="home-balance-card">
+                <Text className="home-balance-label">Balance</Text>
+
+                <View className="home-balance-row">
+                  <Text className="home-balance-amount">
+                    {formatCurrency(HOME_BALANCE.amount, "USD")}
+                  </Text>
+                  <Text className="home-balance-date">
+                    {dayjs(HOME_BALANCE.nextRenewalDate).format("MM/DD")}
+                  </Text>
+                </View>
+              </View>
+
+              <View>
+                <ListHeading title="Upcoming" />
+
+                <FlatList
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  data={UPCOMING_SUBSCRIPTIONS}
+                  renderItem={({ item }) => (
+                    <UpcomingSubscriptionCard {...item} />
+                  )}
+                  keyExtractor={(item) => item.id}
+                  ListEmptyComponent={
+                    <Text className="home-empty-state">
+                      no upcoming subscriptions
+                    </Text>
+                  }
+                />
+              </View>
+
+              <View className="mb-4">
+                <ListHeading title="All Subscriptions" />
+              </View>
+            </>
+          )}
+          data={HOME_SUBSCRIPTIONS}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <SubscriptionCard
+              {...item}
+              expanded={subscriptionId === item.id}
+              onPress={() =>
+                setSubscriptionId((current) =>
+                  current === item.id ? null : item.id,
+                )
+              }
+            />
+          )}
+          extraData={subscriptionId}
+          ItemSeparatorComponent={() => <View className="h-4" />}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <Text className="home-empty-state">no subscriptions</Text>
+          }
+          contentContainerClassName="pb-30"
+        />
     </SafeAreaView>
   );
 }
