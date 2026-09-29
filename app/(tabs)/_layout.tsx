@@ -17,7 +17,6 @@ export default function TabLayout() {
                 <View className={clsx('tabs-pill', focused && 'tabs-active')}>
                     <Image source={icon} resizeMode="contain" className="tabs-glyph" />
                 </View>
-
             </View>
         )
     }

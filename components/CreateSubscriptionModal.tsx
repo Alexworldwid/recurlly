@@ -24,7 +24,7 @@ type Category =
   | "music"
   | "other";
 
-const frequencyOptions: Array<{ label: string; value: Frequency }> = [
+const frequencyOptions: { label: string; value: Frequency }[] = [
   { label: "Monthly", value: "monthly" },
   { label: "Yearly", value: "yearly" },
 ];
